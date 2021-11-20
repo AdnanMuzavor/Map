@@ -1,9 +1,9 @@
 import React from "react";
 
-const LocationCard = ({place}) => {
+const LocationCard = ({place,Fn}) => {
   return (
     <>
-      <div className="col-10 col-lg-10 col-md-10 card">
+      <div className="col-10 col-lg-10 col-md-10 card" onClick={()=>Fn(place)}>
         <div className="row">
           <div className="col-6">
             <img

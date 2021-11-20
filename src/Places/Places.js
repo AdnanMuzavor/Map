@@ -5,6 +5,7 @@ const Places=[
         location:"Ozari",
         lat:15.499387767465054,
         lang:73.8260913470431,
+        id:123,
 
     },
     {
@@ -13,6 +14,7 @@ const Places=[
         location:"18 June Road",
         lat:15.49806364973192,
         lang:73.82609871812552,
+        id:124,
 
     },
     {
@@ -21,6 +23,7 @@ const Places=[
         location:"Ozari",
         lat:15.498687752833655,
         lang:73.82659793732974,
+        id:125,
 
     }
 ];

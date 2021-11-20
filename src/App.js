@@ -1,8 +1,8 @@
 import "./App.css";
-
+import icon1 from "./Icons/icon1.png"
 import "bootstrap/dist/css/bootstrap.css";
 
-import React, { Component, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { Map, GoogleApiWrapper, Marker, InfoWindow } from "google-maps-react";
 import Places from "./Places/Places";
 import LocationCard from "./components/CardComp";
@@ -23,6 +23,18 @@ const mapStyles = {
 };
 
 const MapContainer = (props) => {
+  const [selected, setselected] = useState(Places[0]);
+  const [id,setid]=useState(null);
+  useEffect(() => {
+    setselected(Places[0]);
+  }, []);
+  const PlaceClicked = (p) => {
+    console.log(p);
+    setid(p.id);
+    //setselected(null)
+    setselected(p);
+   
+  };
   return (
     <>
       <div className="container ">
@@ -34,7 +46,11 @@ const MapContainer = (props) => {
             <div className="row flx1">
               {Places.map((e) => {
                 return (
-                  <LocationCard key={Math.random() * Math.random()} place={e} />
+                  <LocationCard
+                    key={Math.random() * Math.random()}
+                    place={e}
+                    Fn={PlaceClicked}
+                  />
                 );
               })}
             </div>
@@ -56,8 +72,50 @@ const MapContainer = (props) => {
                   }}
                 >
                   {Places.map((e) => {
-                    return <Marker position={{ lat: e.lat, lng: e.lang }} />;
+                    return (
+                      <Marker
+                        position={{ lat: e.lat, lng: e.lang }}
+                        onClick={() =>{ setselected(e)
+                        setid(null)}}
+                        
+                        icon={{url:id===e.id?icon1:null,
+                        
+                        }}
+                      //   icon={{
+
+                      //     url: 'https://cdn.mindbowser.com/custom_marker_pin.svg',
+                  
+                      //     // anchor: new google.maps.Point(17, 46),
+                  
+                      //      //scaledSize:new props.google.maps.Size(37, 37)
+                  
+                      // }}
+                      />
+                    );
                   })}
+                  {/* {
+                    selected?<InfoWindow
+                    position={{lat:selected.lat,lng:selected.lang}}
+                    >
+                    <div>
+                      <h2>{selected.name}</h2>
+                    </div>
+                    </InfoWindow>:null
+                  } */}
+                  {selected ? (
+                    <InfoWindow
+                      //  marker={activeMarker}
+                      //  visible={showInfoWindow}
+                      position={{ lat: selected.lat, lng: selected.lang }}
+                      visible={selected ? true : false}
+                    >
+                      <div className={selected.id===id?"container2":"container"}>
+                        <p className="text-center"><strong>{selected.id===id?"Here is place you selected":null}</strong></p>
+                        <p className="text-center">{selected.name}</p>
+                        <div className="text-center">{selected.location}</div>
+                      </div>
+                    </InfoWindow>
+                  ) : null}
                 </Map>
               </div>
             </div>
